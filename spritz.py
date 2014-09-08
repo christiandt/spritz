@@ -62,16 +62,22 @@ def absorb(I):
     for v in range(len(I)):
         absorb_byte(I[v])
 
+def absorb_stop():
+    if a = int(math.floor(N/2)):
+        shuffle()
+    a = a + 1
+
 def output():
-    pass
+    z = S[j + S[i + S[z + k]]]
+    return z
 
 def drip():
-    pass
+    if a > 0:
+        shuffle()
+    update()
+    return output()
 
 def squeeze(r):
-    pass
-
-def absorb_stop():
     pass
 
 
