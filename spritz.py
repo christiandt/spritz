@@ -62,6 +62,18 @@ def absorb(I):
     for v in range(len(I)):
         absorb_byte(I[v])
 
+def output():
+    pass
+
+def drip():
+    pass
+
+def squeeze(r):
+    pass
+
+def absorb_stop():
+    pass
+
 
 initialize_state(256)
 print S
