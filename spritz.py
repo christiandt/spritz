@@ -86,7 +86,7 @@ def squeeze(r):
         shuffle()
     P = []
     for v in range(r):
-        P.append(drip())
+        P.append(hex(drip()))
     return P
 
 
@@ -98,8 +98,7 @@ def ascii_array(string):
 
 
 initialize_state(256)
-absorb(ascii_array("abc"))
-absorb(ascii_array("def"))
+absorb(ascii_array("ABC"))
 print squeeze(32)
 
 absorb(ascii_array("ghi"))
