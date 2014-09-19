@@ -2,13 +2,13 @@ import math
 from fractions import gcd
 
 class Spritz():
-    def __init__(self):
-        self.S = []
-        self.D = 0
-        self.N = 0
 
     def initialize_state(self, N_input):
-        self.i = self.j = self.k = self.z = self.a = 0
+        self.i = 0
+        self.j = 0
+        self.k = 0
+        self.z = 0
+        self.a = 0
         self.w = 1
         self.N = N_input
         self.D = int(math.ceil(math.sqrt(self.N)))
@@ -27,6 +27,7 @@ class Spritz():
         self.S[self.i], self.S[self.j] = self.S[self.j], self.S[self.i]
 
     def whip(self, r):
+        print "whip"
         for v in range(r):
             self.update()
         self.w = self.w + 1
@@ -76,11 +77,12 @@ class Spritz():
         return self.output()
 
     def squeeze(self, r):
+        print "squeeze"
         if self.a > 0:
             self.shuffle()
         P = []
         for v in range(r):
-            P.append(self.drip())
+            P.append(hex(self.drip()))
         return P
 
 
@@ -90,9 +92,19 @@ class Spritz():
             key.append(int(char.encode("hex")))
         return key
 
+    def print_variables(self):
+        print "i: "+hex(s.i)
+        print "j: "+hex(s.j)
+        print "k: "+hex(s.k)
+        print "z: "+hex(s.z)
+        print "a: "+hex(s.a)
+        print "w: "+hex(s.w)
+
 s = Spritz()
 s.initialize_state(256)
 s.absorb(s.ascii_array("ABC"))
 s.absorb_stop()
+s.print_variables()
 s.absorb_byte(32)
 print s.squeeze(32)
+s.print_variables()
