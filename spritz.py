@@ -1,105 +1,98 @@
 import math
 from fractions import gcd
 
-S = []
-D = 0
-N = 0
+class Spritz():
+    def __init__(self):
+        self.S = []
+        self.D = 0
+        self.N = 0
 
-def initialize_state(N_input):
-    global S, D, N
-    global i, j, k, z, w, a
-    i = j = k = z = a = 0
-    w = 1
-    N = N_input
-    D = int(math.ceil(math.sqrt(N)))
-    S = range(N)
+    def initialize_state(self, N_input):
+        self.i = self.j = self.k = self.z = self.a = 0
+        self.w = 1
+        self.N = N_input
+        self.D = int(math.ceil(math.sqrt(self.N)))
+        self.S = range(self.N)
 
-def low(b):
-    return b % D
+    def low(self, b):
+        return b % self.D
 
-def high(b):
-    return int(math.floor(b/D))
+    def high(self, b):
+        return int(math.floor(b/self.D))
 
-def update():
-    global S, i, j, k
-    i = (i + w) % N
-    j = (k + S[(j + S[i]) % N]) % N
-    k = (i + k + S[j]) % N
-    S[i], S[j] = S[j], S[i]
+    def update(self):
+        self.i = (self.i + self.w) % self.N
+        self.j = (self.k + self.S[(self.j + self.S[self.i]) % self.N]) % self.N
+        self.k = (self.i + self.k + self.S[self.j]) % self.N
+        self.S[self.i], self.S[self.j] = self.S[self.j], self.S[self.i]
 
-def whip(r):
-    global w
-    for v in range(r):
-        update()
-    w = w + 1
-    while gcd(w, N) != 1:
-        w = (w + 1) % N
+    def whip(self, r):
+        for v in range(r):
+            self.update()
+        self.w = self.w + 1
+        while gcd(self.w, self.N) != 1:
+            self.w = (self.w + 1) % self.N
 
-def crush():
-    for v in range(int(math.floor(N/2)-1)):
-        if S[v] > S[N-1-v]:
-            S[v], S[N-1-v] = S[N-1-v], S[v]
+    def crush(self):
+        for v in range(int(math.floor(self.N/2)-1)):
+            if self.S[v] > self.S[self.N-1-v]:
+                self.S[v], self.S[self.N-1-v] = self.S[self.N-1-v], self.S[v]
 
-def shuffle():
-    global a
-    whip(2*N)
-    crush()
-    whip(2*N)
-    crush()
-    whip(2*N)
-    a = 0
+    def shuffle(self):
+        self.whip(2*self.N)
+        self.crush()
+        self.whip(2*self.N)
+        self.crush()
+        self.whip(2*self.N)
+        self.a = 0
 
-def absorb_nibble(x):
-    global S, a
-    if a == int(math.floor(N/2)):
-        shuffle()
-    S[a], S[int(math.floor(N/2)+x)] = S[int(math.floor(N/2)+x)], S[a]
-    a = (a + 1) % N
+    def absorb_nibble(self, x):
+        if self.a == int(math.floor(self.N/2)):
+            self.shuffle()
+        self.S[self.a], self.S[int(math.floor(self.N/2)+x)] = self.S[int(math.floor(self.N/2)+x)], self.S[self.a]
+        self.a = (self.a + 1) % self.N
 
-def absorb_byte(b):
-    absorb_nibble(low(b))
-    absorb_nibble(high(b))
+    def absorb_byte(self, b):
+        self.absorb_nibble(self.low(b))
+        self.absorb_nibble(self.high(b))
 
-def absorb(I):
-    for v in range(len(I)):
-        absorb_byte(I[v])
+    def absorb(self, I):
+        for v in I:
+            self.absorb_byte(v)
 
-def absorb_stop():
-    global a
-    if a == int(math.floor(N/2)):
-        shuffle()
-    a = (a + 1) % N
+    def absorb_stop(self):
+        if self.a == int(math.floor(self.N/2)):
+            self.shuffle()
+        self.a = (self.a + 1) % self.N
 
-def output():
-    global z
-    z = S[(j + S[(i + S[(z + k) % N]) % N]) % N]
-    return z
+    def output(self):
+        self.z = self.S[(self.j + self.S[(self.i + self.S[(self.z + self.k) % self.N]) % self.N]) % self.N]
+        return self.z
 
-def drip():
-    if a > 0:
-        shuffle()
-    update()
-    return output()
+    def drip(self):
+        if self.a > 0:
+            self.shuffle()
+        self.update()
+        return self.output()
 
-def squeeze(r):
-    if a > 0:
-        shuffle()
-    P = []
-    for v in range(r):
-        P.append(hex(drip()))
-    return P
+    def squeeze(self, r):
+        if self.a > 0:
+            self.shuffle()
+        P = []
+        for v in range(r):
+            P.append(self.drip())
+        return P
 
 
-def ascii_array(string):
-    key = []
-    for char in string:
-        key.append(ord(char))
-    return key
+    def ascii_array(self, string):
+        key = []
+        for char in string:
+            key.append(int(char.encode("hex")))
+        return key
 
-
-initialize_state(256)
-absorb(ascii_array("ABC"))
-print squeeze(32)
-
-absorb(ascii_array("ghi"))
-print squeeze(1000)
+s = Spritz()
+s.initialize_state(256)
+s.absorb(s.ascii_array("ABC"))
+s.absorb_stop()
+s.absorb_byte(32)
+print s.squeeze(32)
