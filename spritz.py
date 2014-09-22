@@ -27,7 +27,6 @@ class Spritz():
         self.S[self.i], self.S[self.j] = self.S[self.j], self.S[self.i]
 
     def whip(self, r):
-        print "whip"
         for v in range(r):
             self.update()
         self.w = self.w + 1
@@ -51,7 +50,7 @@ class Spritz():
         if self.a == int(math.floor(self.N/2)):
             self.shuffle()
         self.S[self.a], self.S[int(math.floor(self.N/2)+x)] = self.S[int(math.floor(self.N/2)+x)], self.S[self.a]
-        self.a = (self.a + 1) % self.N
+        self.a += 1 % self.N
 
     def absorb_byte(self, b):
         self.absorb_nibble(self.low(b))
@@ -64,7 +63,7 @@ class Spritz():
     def absorb_stop(self):
         if self.a == int(math.floor(self.N/2)):
             self.shuffle()
-        self.a = (self.a + 1) % self.N
+        self.a += 1 % self.N
 
     def output(self):
         self.z = self.S[(self.j + self.S[(self.i + self.S[(self.z + self.k) % self.N]) % self.N]) % self.N]
@@ -77,7 +76,6 @@ class Spritz():
         return self.output()
 
     def squeeze(self, r):
-        print "squeeze"
         if self.a > 0:
             self.shuffle()
         P = []
