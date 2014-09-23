@@ -80,7 +80,7 @@ class Spritz():
             self.shuffle()
         P = []
         for v in range(r):
-            P.append(hex(self.drip()))
+            P.append(self.drip())
         return P
 
 
@@ -91,18 +91,22 @@ class Spritz():
         return key
 
     def print_variables(self):
-        print "i: "+hex(s.i)
-        print "j: "+hex(s.j)
-        print "k: "+hex(s.k)
-        print "z: "+hex(s.z)
-        print "a: "+hex(s.a)
-        print "w: "+hex(s.w)
+        print "i: "+hex(self.i)
+        print "j: "+hex(self.j)
+        print "k: "+hex(self.k)
+        print "z: "+hex(self.z)
+        print "a: "+hex(self.a)
+        print "w: "+hex(self.w)
+        print "S: "+ str(self.S)
+
+    def hash(self, N, M, r):
+        self.initialize_state(N)
+        self.absorb(self.ascii_array(M))
+        self.absorb_stop()
+        self.absorb_byte(r)
+        return self.squeeze(r)
+
 
 s = Spritz()
-s.initialize_state(256)
-s.absorb(s.ascii_array("ABC"))
-s.absorb_stop()
-s.print_variables()
-s.absorb_byte(32)
-print s.squeeze(32)
-s.print_variables()
+print s.hash(256, "ABC", 32)
+s.print_variables()      # test-print
