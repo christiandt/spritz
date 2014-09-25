@@ -80,7 +80,7 @@ class Spritz():
             self.shuffle()
         P = []
         for v in range(r):
-            P.append(self.drip())
+            P.append(hex(self.drip()))
         return P
 
 
@@ -106,7 +106,17 @@ class Spritz():
         self.absorb_byte(r)
         return self.squeeze(r)
 
+    def key_setup(self, K):
+        self.initialize_state()
+        self.absorb(K)
 
-s = Spritz()
-print s.hash(256, "ABC", 32)
-s.print_variables()      # test-print
+    def encrypt(self, K, M):
+        key_setup(K)
+        Z = squeeze(len(M))
+        C = [i + j for i, j in zip(M, Z)]
+        return C
+
+
+#s = Spritz()
+#print s.hash(256, "ABC", 32)
+#s.print_variables()      # test-print
