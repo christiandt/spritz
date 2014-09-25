@@ -80,41 +80,40 @@ class Spritz():
             self.shuffle()
         P = []
         for v in range(r):
-            P.append(hex(self.drip()))
+            P.append(self.drip())
         return P
 
-
-    def ascii_array(self, string):
-        key = []
-        for char in string:
-            key.append(int(char.encode("hex")))
-        return key
-
     def print_variables(self):
-        print "i: "+hex(self.i)
-        print "j: "+hex(self.j)
-        print "k: "+hex(self.k)
-        print "z: "+hex(self.z)
-        print "a: "+hex(self.a)
-        print "w: "+hex(self.w)
-        print "S: "+ str(self.S)
+        print "i: " + hex(self.i)
+        print "j: " + hex(self.j)
+        print "k: " + hex(self.k)
+        print "z: " + hex(self.z)
+        print "a: " + hex(self.a)
+        print "w: " + hex(self.w)
+        print "S: " + str(self.S)
 
     def hash(self, N, M, r):
         self.initialize_state(N)
-        self.absorb(self.ascii_array(M))
+        self.absorb(M)
         self.absorb_stop()
         self.absorb_byte(r)
         return self.squeeze(r)
 
     def key_setup(self, K):
-        self.initialize_state()
+        self.initialize_state(256)
         self.absorb(K)
 
     def encrypt(self, K, M):
-        key_setup(K)
-        Z = squeeze(len(M))
+        self.key_setup(K)
+        Z = self.squeeze(len(M))
         C = [i + j for i, j in zip(M, Z)]
         return C
+
+    def int_array(self, string):
+        key = []
+        for char in string:
+            key.append(int(char.encode("hex")))
+        return key
 
 
 #s = Spritz()
