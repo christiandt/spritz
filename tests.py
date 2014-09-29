@@ -15,7 +15,7 @@ class TestSpritz(unittest.TestCase):
 
 	def test_encryption(self):
 		result = [hex(i) for i in self.s.encrypt(self.s.int_array("ABC"), [0]*8)]
-		self.assertEqual(result, ['0x77', '0x9a', '0x8e', '0x01', '0xf9', '0xe9', '0xcb', '0x'])
+		self.assertEqual(result, ['0x77', '0x9a', '0x8e', '0x01', '0xf9', '0xe9', '0xcb', '0xc0'])
 
 if __name__ == '__main__':
     unittest.main()
