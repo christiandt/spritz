@@ -90,14 +90,22 @@ class Spritz():
         print "z: " + hex(self.z)
         print "a: " + hex(self.a)
         print "w: " + hex(self.w)
-        print "S: " + str(self.S)
+        print "D: " + hex(self.D)
+        result = ""
+        for i in self.S:
+            result += "%0.2X" % i
+        print "S: " + result
+        #print "S: " + str(self.S)
 
     def hash(self, N, M, r):
         self.initialize_state(N)
         self.absorb(M)
         self.absorb_stop()
-        self.absorb_byte(r)
-        return self.squeeze(r)
+        #self.absorb_byte(r)
+        self.print_variables()
+        res = self.squeeze(r)
+        self.print_variables()
+        return res
 
     def key_setup(self, K):
         self.initialize_state(256)
@@ -112,5 +120,11 @@ class Spritz():
     def int_array(self, string):
         key = []
         for char in string:
-            key.append(int(char.encode("hex")))
+            key.append(ord(char))
         return key
+
+s = Spritz()
+result = ""
+for i in s.hash(256, s.int_array("ABC"), 32):
+    result += "%0.2X" % i
+print result
