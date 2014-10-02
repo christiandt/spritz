@@ -114,3 +114,4 @@ class Spritz():
         for char in string:
             key.append(int(char.encode("hex")))
         return key
+        
