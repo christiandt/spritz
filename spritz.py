@@ -29,12 +29,12 @@ class Spritz():
     def whip(self, r):
         for v in range(r):
             self.update()
-        self.w = self.w + 1
+        self.w = (self.w + 1) % self.N
         while gcd(self.w, self.N) != 1:
             self.w = (self.w + 1) % self.N
 
     def crush(self):
-        for v in range(int(math.floor(self.N/2)-1)):
+        for v in range(int(math.floor(self.N/2))):
             if self.S[v] > self.S[self.N-1-v]:
                 self.S[v], self.S[self.N-1-v] = self.S[self.N-1-v], self.S[v]
 
@@ -101,11 +101,8 @@ class Spritz():
         self.initialize_state(N)
         self.absorb(M)
         self.absorb_stop()
-        #self.absorb_byte(r)
-        self.print_variables()
-        res = self.squeeze(r)
-        self.print_variables()
-        return res
+        self.absorb_byte(r)
+        return self.squeeze(r)
 
     def key_setup(self, K):
         self.initialize_state(256)
@@ -122,9 +119,4 @@ class Spritz():
         for char in string:
             key.append(ord(char))
         return key
-
-s = Spritz()
-result = ""
-for i in s.hash(256, s.int_array("ABC"), 32):
-    result += "%0.2X" % i
-print result
+        
