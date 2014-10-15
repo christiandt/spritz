@@ -2,7 +2,7 @@ from spritz import Spritz
 import random, pickle
 
 spritz = Spritz()
-N = 256
+N = 32
 r = 1
 storage = open('collisions.pkl', 'wb')
 
@@ -22,3 +22,4 @@ while True:
 		hashlist.append(message)
 		counter += 1
 	r += 1
+storage.close()

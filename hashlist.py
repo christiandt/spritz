@@ -15,3 +15,4 @@ for i in range(2000):
 
 print hashlist
 pickle.dump(hashlist, storage)
+storage.close()
