@@ -8,9 +8,10 @@ r = 3
 storage = open('list.pkl', 'wb')
 hashlist = []
 
-for i in range(2000):
+for i in range(10000):
 	message = str(i)
-	hashlist.append(spritz.hash(N, message, r))
+	hashed = spritz.hash(N, message, r)
+	hashlist.append(hashed)
 
 print hashlist
 pickle.dump(hashlist, storage)
