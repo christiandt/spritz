@@ -80,7 +80,8 @@ class Spritz():
             self.shuffle()
         P = []
         for v in range(r):
-            P.append("%0.2X" % self.drip())
+            #P.append("%0.2X" % self.drip())
+            P.append(str(self.drip()))
         return P
 
     def print_variables(self):
@@ -107,11 +108,10 @@ class Spritz():
 
     def hash(self, N, M, r):
         self.initialize_state(N)
-        message = self.int_array(M)
-        self.absorb(message)
+        self.absorb(M)
         self.absorb_stop()
         self.absorb_byte(r)
-        return ''.join(self.squeeze(r))
+        return self.squeeze(r)
 
     def key_setup(self, K):
         self.initialize_state(256)
