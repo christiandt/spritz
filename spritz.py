@@ -93,7 +93,7 @@ class Spritz():
         print "a: " + hex(self.a)
         print "w: " + hex(self.w)
         print "D: " + hex(self.D)
-        print "S: " + self.to_string(self.S)
+        print "S: " + self.array_to_string(self.S)
         #print "S: " + str(self.S)
 
     def int_string(self, string):
@@ -102,16 +102,17 @@ class Spritz():
             key += "%03d" % ord(char)
         return key
 
-    def to_ascii_string(self, int_string):
+    def int_to_hex(self, int_string):
         result = ""
         for i in range(0, len(int_string), 3):
             result += "%0.2X" % int(int_string[i:i+3])
         return result
 
-    def to_string(self, array):
+    def array_to_string(self, array):
         result = ""
         for i in array:
             result += "%0.2X" % i
+        return result
 
     def hash(self, N, M, r):
         self.initialize_state(N)
@@ -126,7 +127,8 @@ class Spritz():
 
     def encrypt(self, K, M):
         self.key_setup(K)
-        Z = self.squeeze(len(M))
+        Z_string = self.squeeze(len(M))
+        Z = [int(Z_string[i:i+3]) for i in range(0, len(Z_string), 3)]
         C = [i + j for i, j in zip(M, Z)]
         return C
 

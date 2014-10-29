@@ -1,18 +1,17 @@
 from spritz import Spritz
-
+import sys
 
 spritz = Spritz()
 N = 256
 r = 3
-hashlist = dict()
-message = "message"
-message = spritz.int_string(message)
+messages = ["banana", "apple", "message", "mouse", "spritz"]
 
-x0 = spritz.hash(N, message, r)
-#print x0
-previous = spritz.hash(N, message, r)
-torstart = spritz.hash(N, previous, r)
-harestart = spritz.hash(N, torstart, r)
+def print_status():
+    global counter
+    counter+=1
+    sys.stdout.flush()
+    sys.stdout.write("Hashed: %i \r" % counter)
+    return
 
 def next(key):
     global previous
@@ -24,6 +23,7 @@ def next(key):
             current = spritz.hash(N, previous, r)
             hashlist[previous] = current
             previous = current
+            print_status()
 
 def floyd():
     tortoise = torstart
@@ -32,8 +32,8 @@ def floyd():
     while tortoise != hare:
         tortoise = next(tortoise)
         hare = next(next(hare))
-
-    print "Cycle found at " + spritz.to_ascii_string(hare)
+    print ""
+    print "Cycle found at " + spritz.int_to_hex(hare)
     mu = 0
     tortoise = x0
 
@@ -45,4 +45,14 @@ def floyd():
     print "Cycle started after " + str(mu) + " hashes"
     return mu
 
-floyd()
+print " *** %i bit *** " % (r*8)
+for message in messages:
+    print "Message: " + message
+    message = spritz.int_string(message)
+    hashlist = dict()
+    x0 = spritz.hash(N, message, r)
+    previous = spritz.hash(N, message, r)
+    torstart = spritz.hash(N, previous, r)
+    harestart = spritz.hash(N, torstart, r)
+    counter = 0
+    floyd()
