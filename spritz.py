@@ -57,8 +57,9 @@ class Spritz():
         self.absorb_nibble(self.high(b))
 
     def absorb(self, I):
-        for v in I:
-            self.absorb_byte(v)
+        for v in range(0, len(I), 3):
+            byte = int(I[v:v+3])
+            self.absorb_byte(byte)
 
     def absorb_stop(self):
         if self.a == int(math.floor(self.N/2)):
@@ -78,10 +79,10 @@ class Spritz():
     def squeeze(self, r):
         if self.a > 0:
             self.shuffle()
-        P = []
+        P = ""
         for v in range(r):
             #P.append("%0.2X" % self.drip())
-            P.append(str(self.drip()))
+            P += "%03d" % self.drip()
         return P
 
     def print_variables(self):
@@ -95,11 +96,17 @@ class Spritz():
         print "S: " + self.to_string(self.S)
         #print "S: " + str(self.S)
 
-    def int_array(self, string):
-        key = []
+    def int_string(self, string):
+        key = ""
         for char in string:
-            key.append(ord(char))
+            key += "%03d" % ord(char)
         return key
+
+    def to_ascii_string(self, int_string):
+        result = ""
+        for i in range(0, len(int_string), 3):
+            result += "%0.2X" % int(int_string[i:i+3])
+        return result
 
     def to_string(self, array):
         result = ""
