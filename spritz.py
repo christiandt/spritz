@@ -38,11 +38,24 @@ class Spritz():
             if self.S[v] > self.S[self.N-1-v]:
                 self.S[v], self.S[self.N-1-v] = self.S[self.N-1-v], self.S[v]
 
+    def alt_crush(self):
+        for v in range(int(math.floor(self.N/2))):
+            x = self.S[v]
+            y = self.S[N-1-v]
+            if x > y:
+                self.S[v] = y
+                self.S[N-1-v] = x
+            else:
+                self.S[v] = x
+                self.S[N-1-v] = y
+
     def shuffle(self):
         self.whip(2*self.N)
         self.crush()
+        #self.alt_crush()
         self.whip(2*self.N)
         self.crush()
+        #self.alt_crush()
         self.whip(2*self.N)
         self.a = 0
 

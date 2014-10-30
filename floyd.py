@@ -3,8 +3,8 @@ import sys
 
 spritz = Spritz()
 N = 256
-r = 3
-messages = ["banana", "apple", "message", "mouse", "spritz"]
+r = 4
+messages = ["banana", "apple", "message", "spritz"]
 
 def print_status():
     global counter
