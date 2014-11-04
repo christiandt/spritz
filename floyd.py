@@ -1,10 +1,13 @@
 from spritz import Spritz
+from string_creator import String_Creator
 import sys
 
 spritz = Spritz()
 N = 256
-r = 4
-messages = ["banana", "apple", "message", "spritz"]
+r = 3
+
+string_generator = String_Creator()
+messages = string_generator.random_list(4, 6)
 
 def print_status():
     global counter
