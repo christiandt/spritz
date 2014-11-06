@@ -1,13 +1,6 @@
 from spritz import Spritz
 from string_creator import String_Creator
-import sys
-
-spritz = Spritz()
-N = 256
-r = 3
-
-string_generator = String_Creator()
-messages = string_generator.random_list(4, 6)
+import sys, csv
 
 def print_status():
     global counter
@@ -46,16 +39,32 @@ def floyd():
         mu += 1
 
     print "Cycle started after " + str(mu) + " hashes"
-    return mu
+    return mu, spritz.int_to_hex(hare),
 
-print " *** %i bit *** " % (r*8)
-for message in messages:
-    print "Message: " + message
-    message = spritz.int_string(message)
-    hashlist = dict()
-    x0 = spritz.hash(N, message, r)
-    previous = spritz.hash(N, message, r)
-    torstart = spritz.hash(N, previous, r)
-    harestart = spritz.hash(N, torstart, r)
-    counter = 0
-    floyd()
+
+spritz = Spritz()
+string_generator = String_Creator()
+
+N_values = [64, 128, 256]
+r_values = [1, 2, 3]
+
+with open('collision_results3.csv', 'w') as f:
+    writer = csv.writer(f)
+    writer.writerow(["N", "Bit", "Message", "Hashes", "Cycle pos", "Cycle Node"])
+    for N in N_values:
+        for r in r_values:
+            messages = string_generator.random_list(6, 6)
+
+            print " *** %i bit *** " % (r*8)
+            for message_string in messages:
+                print "Message: " + message_string
+                message = spritz.int_string(message_string)
+                hashlist = dict()
+                x0 = spritz.hash(N, message, r)
+                previous = spritz.hash(N, message, r)
+                torstart = spritz.hash(N, previous, r)
+                harestart = spritz.hash(N, torstart, r)
+                counter = 0
+                cycle_start, cycle_value = floyd()
+                row = [N, (r*8), message_string, counter, cycle_start, cycle_value]
+                writer.writerow(row)
