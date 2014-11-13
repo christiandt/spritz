@@ -24,8 +24,8 @@ with open('collision_results_final.csv', 'rb') as f:
 			prev_bit = bit
 			repetitions = 0
 			total = 0
-		#total += hashes
-		total += cycle_after
+		total += hashes
+		#total += cycle_after
 		repetitions += 1
 	r.append(prev_bit)
 	collisions.append(total/repetitions)
