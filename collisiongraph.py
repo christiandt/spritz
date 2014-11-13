@@ -7,7 +7,7 @@ total = 0
 start_bit = 8
 end_bit = 32
 
-with open('collision_results2.csv', 'rb') as f:
+with open('collision_results_final.csv', 'rb') as f:
 	repetitions = 0
 	prev_bit = start_bit
 	reader = csv.reader(f)
@@ -24,7 +24,8 @@ with open('collision_results2.csv', 'rb') as f:
 			prev_bit = bit
 			repetitions = 0
 			total = 0
-		total += hashes
+		#total += hashes
+		total += cycle_after
 		repetitions += 1
 	r.append(prev_bit)
 	collisions.append(total/repetitions)

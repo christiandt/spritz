@@ -20,6 +20,8 @@ def next(key):
             hashlist[previous] = current
             previous = current
             #print_status()
+            global counter
+            counter+=1
 
 def floyd():
     tortoise = torstart
@@ -55,7 +57,7 @@ with open('collision_test_test.csv', 'w') as f:
     writer.writerow(["Bit", "Message", "Hashes", "Cycle pos", "Cycle Node"])
     for N in N_values:
         for r in r_values:
-            messages = string_generator.random_list(2, 6)
+            messages = string_generator.random_list(100, 6)
 
             print " *** %i bit *** " % (r*8)
             for message_string in messages:
