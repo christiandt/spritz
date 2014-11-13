@@ -19,7 +19,7 @@ def next(key):
             current = spritz.hash(N, previous, r)
             hashlist[previous] = current
             previous = current
-            print_status()
+            #print_status()
 
 def floyd():
     tortoise = torstart

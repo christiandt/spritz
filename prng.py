@@ -1,16 +1,34 @@
 from spritz import Spritz
 import matplotlib.pyplot as plt
+import pickle, csv
+
 
 s = Spritz()
-points = 9000
 
-def plot_prng(key):
-	s.key_setup(s.int_array(key))
+
+def get_prns(key, length):
+	key = s.int_string(key)
+	s.key_setup(key)
 	numbers = []
-	for i in range(points):
+	for i in range(length):
 		numbers.append(s.drip())
-	plt.plot(range(points), numbers, 'ro')
-	plt.axis([0, points, 0, 256])
-	plt.show()
+	return numbers
 
-plot_prng("spritz")
+def generate_data_file(key, length):
+	numbers = get_prns(key, length)
+	cnt = 0
+	test = ""
+	with open('random.dat', 'wb') as f:
+		writer = csv.writer(f)
+		for number in numbers:
+			test += "{0:08b}".format(number)
+			cnt += 1
+			if cnt >= 3:
+				print test
+				writer.writerow([test])
+				test = ""
+				cnt = 0
+
+
+
+print generate_data_file("spritz", 9000)
