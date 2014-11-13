@@ -7,7 +7,7 @@ total = 0
 start_bit = 8
 end_bit = 32
 
-with open('collision_results2 copy.csv', 'rb') as f:
+with open('collision_results2.csv', 'rb') as f:
 	repetitions = 0
 	prev_bit = start_bit
 	reader = csv.reader(f)
@@ -31,6 +31,6 @@ with open('collision_results2 copy.csv', 'rb') as f:
 
 print r
 print collisions
-plt.bar(r, collisions)
+plt.plot(r, collisions, 'bo-')
 #plt.axis([0, 256, 0, 256])
 plt.show()

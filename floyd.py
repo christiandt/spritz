@@ -45,15 +45,17 @@ def floyd():
 spritz = Spritz()
 string_generator = String_Creator()
 
-N_values = [64, 128, 256]
-r_values = [1, 2, 3]
+# N_values = [64, 128, 256]
+N_values = [256]
+r_values = [1, 2, 3, 4]
 
-with open('collision_results3.csv', 'w') as f:
+with open('collision_test_test.csv', 'w') as f:
     writer = csv.writer(f)
-    writer.writerow(["N", "Bit", "Message", "Hashes", "Cycle pos", "Cycle Node"])
+    #writer.writerow(["N", "Bit", "Message", "Hashes", "Cycle pos", "Cycle Node"])
+    writer.writerow(["Bit", "Message", "Hashes", "Cycle pos", "Cycle Node"])
     for N in N_values:
         for r in r_values:
-            messages = string_generator.random_list(6, 6)
+            messages = string_generator.random_list(2, 6)
 
             print " *** %i bit *** " % (r*8)
             for message_string in messages:
@@ -66,5 +68,6 @@ with open('collision_results3.csv', 'w') as f:
                 harestart = spritz.hash(N, torstart, r)
                 counter = 0
                 cycle_start, cycle_value = floyd()
-                row = [N, (r*8), message_string, counter, cycle_start, cycle_value]
+                # row = [N, (r*8), message_string, counter, cycle_start, cycle_value]
+                row = [(r*8), message_string, counter, cycle_start, cycle_value]
                 writer.writerow(row)
