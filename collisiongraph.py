@@ -7,7 +7,7 @@ total = 0
 start_bit = 8
 end_bit = 32
 
-with open('collision_results_final.csv', 'rb') as f:
+with open('collision_test_test.csv', 'rb') as f:
 	repetitions = 0
 	prev_bit = start_bit
 	reader = csv.reader(f)

@@ -44,13 +44,20 @@ def decrypt(ciphertext):
 
 
 ksa('Key')
-ciph = encrypt('Plaintext')
-print ciph
+print prg()
+print prg()
+print prg()
+print prg()
+print prg()
+print prg()
 
-i = j = 0
-ksa('Key')
-plain = decrypt(ciph)
-print plain
+#ciph = encrypt('Plaintext')
+#print ciph
+
+#i = j = 0
+#ksa('Key')
+#plain = decrypt(ciph)
+#print plain
 
 #ksa('Wiki')
 #ciph = encrypt('pedia')
