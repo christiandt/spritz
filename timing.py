@@ -17,7 +17,7 @@ def timingtest():
 key = s.int_string("keykeyke")
 #key = s.int_string(string_maker.create_string(8))
 keysize()
-for i in range(2000):
+for i in range(500):
 	time_result = round(timeit("timingtest()", setup="from __main__ import timingtest", number=100) * 1000, 2)
 	#print time_result
 	if time_result in values:
@@ -28,10 +28,10 @@ for i in range(2000):
 
 x_plot = []
 y_plot = []
-for value in values:
+for value in sorted(values):
 	x_plot.append(value)
 	y_plot.append(values[value])
 
-plt.bar(x_plot, y_plot, width=0.03)
+plt.plot(x_plot, y_plot, 'bo-')
 plt.axis([6, 8, 0, 40])
 plt.show()

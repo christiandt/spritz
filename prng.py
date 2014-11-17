@@ -17,8 +17,8 @@ def get_prns(key, length):
 def generate_data_file(key, length):
 	numbers = get_prns(key, length)
 	cnt = 0
-	test = ""
-	with open('random.dat', 'wb') as f:
+	test = "   "
+	with open('random.spritz', 'wb') as f:
 		writer = csv.writer(f)
 		for number in numbers:
 			test += "{0:08b}".format(number)
@@ -26,9 +26,11 @@ def generate_data_file(key, length):
 			if cnt >= 3:
 				print test
 				writer.writerow([test])
-				test = ""
+				test = "   "
 				cnt = 0
+		writer.writerow([test])
+		print test
 
 
 
-print generate_data_file("spritz", 9000)
+print generate_data_file("spritz", 100000)
