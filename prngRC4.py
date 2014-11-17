@@ -38,6 +38,8 @@ def get_prns(key, length):
 	numbers = []
 	for i in range(length):
 		numbers.append(prg())
+	print numbers
+	print len(numbers)
 	return numbers
 
 def generate_data_file(key, length):
@@ -59,4 +61,4 @@ def generate_data_file(key, length):
 
 
 
-print generate_data_file("spritz", 9000)
+print generate_data_file("spritz", 100000)
