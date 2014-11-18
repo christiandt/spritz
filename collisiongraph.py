@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 import csv
 
 r = []
@@ -6,6 +7,10 @@ collisions = []
 total = 0
 start_bit = 8
 end_bit = 32
+t1 = np.arange(0.0, 33.0, 0.1)
+
+def expected(b):
+	return np.sqrt(1-(2*np.log(0.5)*2**b))
 
 with open('collision_test_test.csv', 'rb') as f:
 	repetitions = 0
@@ -30,8 +35,12 @@ with open('collision_test_test.csv', 'rb') as f:
 	r.append(prev_bit)
 	collisions.append(total/repetitions)
 
+print expected(32)
 print r
 print collisions
-plt.plot(r, collisions, 'bo-')
-#plt.axis([0, 256, 0, 256])
+plt.plot(r, collisions, 'bo', t1, expected(t1), 'r')
+plt.axis([0, 33, 0, 80000])
+plt.title('Hash Collisions')
+plt.xlabel('bits')
+plt.ylabel('hashes')
 plt.show()
