@@ -1,6 +1,6 @@
 from re import findall
 import matplotlib.pyplot as plt
-import pickle, csv
+import pickle, sys
 
 
 S = []
@@ -33,32 +33,19 @@ def prg():
 	z = S[(S[i] + S[j]) % 256]
 	return z
 
-def get_prns(key, length):
-	ksa(key)
-	numbers = []
-	for i in range(length):
-		numbers.append(prg())
-	print numbers
-	print len(numbers)
-	return numbers
+def get_binary():
+	bit = int(round(prg()/225.0))
+	return str(bit)
 
 def generate_data_file(key, length):
-	numbers = get_prns(key, length)
-	cnt = 0
-	test = "   "
+	ksa(key)
+	numbers = ""
+	for i in range(length):
+		sys.stdout.flush()
+		sys.stdout.write("Generating: %i \r" % i)
+		numbers += get_binary()
 	with open('random.rc4', 'wb') as f:
-		writer = csv.writer(f)
-		for number in numbers:
-			test += "{0:08b}".format(number)
-			cnt += 1
-			if cnt >= 3:
-				print test
-				writer.writerow([test])
-				test = "   "
-				cnt = 0
-		writer.writerow([test])
-		print test
+		f.write(numbers)
 
 
-
-print generate_data_file("spritz", 100000)
+generate_data_file("spritz", 512000000)
