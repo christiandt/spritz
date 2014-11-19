@@ -2,7 +2,7 @@ import math
 from fractions import gcd
 
 class Spritz():
-
+    alt = False
     def initialize_state(self, N_input):
         self.i = 0
         self.j = 0
@@ -51,11 +51,9 @@ class Spritz():
 
     def shuffle(self):
         self.whip(2*self.N)
-        self.crush()
-        #self.alt_crush()
+        self.alt_crush() if self.alt else self.crush()
         self.whip(2*self.N)
-        self.crush()
-        #self.alt_crush()
+        self.alt_crush() if self.alt else self.crush()
         self.whip(2*self.N)
         self.a = 0
 
