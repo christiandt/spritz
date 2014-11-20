@@ -1,6 +1,6 @@
 from re import findall
 import matplotlib.pyplot as plt
-import pickle, sys
+import pickle
 
 
 S = []
@@ -39,13 +39,15 @@ def get_binary():
 
 def generate_data_file(key, length):
 	ksa(key)
-	numbers = ""
-	for i in range(length):
-		sys.stdout.flush()
-		sys.stdout.write("Generating: %i \r" % i)
-		numbers += get_binary()
+	i = 0.0
 	with open('random.rc4', 'wb') as f:
-		f.write(numbers)
+		f.write(get_binary())
+		i += 1.0
+	while i <= length:
+		with open('random.rc4', 'a+b') as f:
+			f.write(get_binary())
+			i += 1.0
+	
 
 
-generate_data_file("spritz", 512000000)
+generate_data_file("spritz", 512000000.0)

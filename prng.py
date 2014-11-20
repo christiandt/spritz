@@ -1,6 +1,6 @@
 from spritz import Spritz
 import matplotlib.pyplot as plt
-import pickle, csv
+import pickle
 
 
 s = Spritz()
@@ -12,12 +12,15 @@ def get_binary():
 def generate_data_file(key, length):
 	key = s.int_string(key)
 	s.key_setup(key)
-	numbers = ""
-	for i in range(length):
-		numbers += get_binary()
+	i = 0.0
 	with open('random.spritz', 'wb') as f:
-		f.write(numbers)
+		f.write(get_binary())
+		i += 1.0
+	while i <= length:
+		with open('random.spritz', 'a+b') as f:
+			f.write(get_binary())
+			i += 1.0
 
 
 
-generate_data_file("spritz", 10000000)
+generate_data_file("spritz", 512000000.0)
