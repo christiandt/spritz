@@ -34,20 +34,18 @@ def prg():
 	return z
 
 def get_binary():
-	bit = int(round(prg()/225.0))
-	return str(bit)
+	num = prg()
+	bits = "{0:08b}".format(num)
+	return bits
 
 def generate_data_file(key, length):
 	ksa(key)
-	i = 0.0
+	numbers = ""
+	for i in range(length):
+		numbers += get_binary()
 	with open('random.rc4', 'wb') as f:
-		f.write(get_binary())
-		i += 1.0
-	while i <= length:
-		with open('random.rc4', 'a+b') as f:
-			f.write(get_binary())
-			i += 1.0
+		f.write(numbers)
 	
 
 
-generate_data_file("spritz", 512000000.0)
+generate_data_file("spritz", 1000)
