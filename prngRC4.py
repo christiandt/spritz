@@ -48,4 +48,4 @@ def generate_data_file(key, length):
 	
 
 
-generate_data_file("spritz", 1000)
+generate_data_file("spritz", 12500000)

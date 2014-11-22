@@ -13,9 +13,9 @@ def generate_data_file(key, length):
 	numbers = ""
 	for i in range(length):
 		numbers += get_binary()
-	with open('random.spritz.med', 'wb') as f:
+	with open('random.spritz', 'wb') as f:
 		f.write(numbers)
 
 
 
-generate_data_file("spritz", 1000000)
+generate_data_file("spritz", 12500000)
